@@ -20,9 +20,9 @@ const UserConnected = ({ socket }) => {
   }, [newUser, socket]);
 
   return (
-    <div className=" w-2/4 flex-row">
+    <div className=" w-2/4">
       <Title text="Users Connected" />
-      <div className=" mt-10 flex-col justify-center items-center">
+      <div className=" mt-10 flex flex-col justify-center items-center">
         {newUser.map((user, index) => (
           <UserCard
             key={index}

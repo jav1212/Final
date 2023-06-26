@@ -37,24 +37,26 @@ const Login = ({ socket }) => {
       }
     }
 
-    socket.on("Login response", (data) => onResponse(data));
-    return () => {
-      socket.off("Login response", (data) => onResponse(data));
-      socket.off("connect_error", () => {
-        console.log("error");
-      });
+    const handleBeforeUnload = (event) => {
+      event.preventDefault();
+      event.returnValue = "";
+      return event.returnValue;
     };
-  }, [socket]);
 
-  useEffect(() => {
-    const handleUnload = (event) => {
+    const handleUnload = () => {
       socket.disconnect();
     };
 
-    window.addEventListener("beforeunload", handleUnload);
+    window.addEventListener("beforeunload", handleBeforeUnload);
+    window.addEventListener("unload", handleUnload);
+
+    socket.on("Login response", onResponse);
 
     return () => {
-      window.removeEventListener("beforeunload", handleUnload);
+      socket.off("Login response", onResponse);
+      socket.off("connect_error");
+      window.removeEventListener("beforeunload", handleBeforeUnload);
+      window.removeEventListener("unload", handleUnload);
     };
   }, []);
 

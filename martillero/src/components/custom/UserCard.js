@@ -3,8 +3,8 @@ import React from "react";
 const UserCard = ({ nombre, apellido, type }) => {
   return (
     <div
-      className={` w-2/4  text-xl rounded font-[Helvetica Neue] m-5 text-white ${
-        type === "connected" ? "  bg-green" : " bg-red"
+      className={` w-fit m-5 p-5 justify-center text-2xl items-center flex-col rounded font-[Dosis] text-white ${
+        type === "connected" ? "  bg-green/80" : " bg-red/80"
       } `}
     >
       <h2 className=" text-center">

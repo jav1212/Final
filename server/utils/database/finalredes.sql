@@ -1,9 +1,9 @@
-drop table CLIENTES;
-drop table PRODUCTOS;
-drop table IMAGENES;
-drop table SUBASTAS;
-drop table OFERTAS;
-drop table HISTORICO_CARTERA;
+truncate table CLIENTES;
+truncate table PRODUCTOS; 
+truncate table IMAGENES;
+truncate table SUBASTAS;
+truncate table OFERTAS;
+truncate table HISTORICO_CARTERA;
 
 CREATE TABLE CLIENTES (
     id_cliente INT(2) PRIMARY KEY,

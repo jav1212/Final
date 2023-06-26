@@ -23,7 +23,7 @@ function App() {
   return (
     <div className=" h-screen w-screen flex">
       <UserConnected socket={socket} />
-      <OffersByUsers />
+      <OffersByUsers socket={socket} />
     </div>
   );
 }

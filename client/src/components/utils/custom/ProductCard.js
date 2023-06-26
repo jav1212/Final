@@ -2,82 +2,130 @@ import React, { useEffect, useState } from "react";
 import { socket } from "../../../config/socket";
 
 const ProductCard = ({
-  nombre,
-  descripcion,
-  precio,
-  marca,
-  modelo,
-  año,
-  id_producto,
+  product,
   id_cliente,
-  min_offer,
+  response,
+  message,
+  visibleNotification,
+  setResponse,
+  setMessage,
+  setVIsibleNotification,
 }) => {
   const [offer, setOffer] = useState({
     precio: "",
   });
+  const [value, setValue] = useState("");
+  const [actualPrice, setActualPrice] = useState(product.precio);
+  const [minOffer, setMinOffer] = useState(getMinOffer(product.precio));
+
+  function getMinOffer(precio) {
+    return Math.trunc(
+      parseInt(precio) +
+        (parseInt(precio) * Math.floor(Math.random() * 10 + 1)) / 100
+    );
+  }
 
   const handleChange = (e) => {
     setOffer({
       ...offer,
       [e.target.name]: e.target.value,
     });
+    setValue(e.target.value);
   };
 
   const handleOffer = (e) => {
     e.preventDefault();
-
     const { precio } = offer;
-    if (precio >= min_offer) {
+    if (precio >= minOffer) {
+      console.log("manda a verificar la oferta");
       socket.emit("validate_offer", {
-        id_producto: id_producto,
+        id_producto: product.id_producto,
         id_cliente: id_cliente,
-        offer: min_offer,
+        offer: precio,
       });
-    } else console.log("no");
+    }
+    setValue("");
   };
 
   useEffect(() => {
-    function onResponseOffer(data) {
-      console.log(data);
+    function sendNotification(response, message) {
+      setResponse(response);
+      setMessage(message);
+      setVIsibleNotification(true);
+      setTimeout(() => {
+        setVIsibleNotification(false);
+      }, 3000);
     }
 
+    function update_prices(newPrice) {
+      setActualPrice(newPrice);
+      setMinOffer(getMinOffer(newPrice));
+    }
+
+    function onNewOffer(data) {
+      const { newPrice } = data;
+      update_prices(newPrice);
+    }
+
+    function onResponseOffer(data) {
+      const { response, message, newPrice } = data;
+      if (response === "Successful") {
+        update_prices(newPrice);
+      }
+      sendNotification(response, message);
+    }
+
+    function onSaleProduct(data) {
+      console.log("Recibe posibilidad de venta");
+      const { response, message, id_cliente_sale, id_producto } = data;
+      if (id_cliente_sale === id_cliente)
+        sendNotification(response, "Haz comprado un producto");
+      else sendNotification("Warning", "Se ha vendido un producto");
+    }
+    socket.on("new_offer", (data) => onNewOffer(data));
     socket.on("response_offer", (data) => onResponseOffer(data));
+    socket.on("sale_product", (data) => onSaleProduct(data));
     return () => {
+      socket.on("new_offer", (data) => onNewOffer(data));
       socket.off("response_offer", (data) => onResponseOffer(data));
+      socket.off("sale_product", (data) => onSaleProduct(data));
     };
-  }, [socket]);
+  }, [id_cliente, setMessage, setResponse, setVIsibleNotification]);
 
   return (
     <div className=" w-full">
       <div className=" flex  ml-24 mb-10">
         <h2 className=" text-4xl text-gray-900 font-semibold font-[Dosis]">
-          {marca.toUpperCase()}
+          {product.marca.toUpperCase()}
         </h2>
       </div>
       <div className=" flex ml-24 mb-10">
-        <h1 className=" text-6xl font-semibold font-[Dosis]">{nombre}</h1>
+        <h1 className=" text-6xl font-semibold font-[Dosis]">
+          {product.nombre}
+        </h1>
       </div>
       <div className=" flex ml-24 mb-10">
         <p className=" text-3xl text-gray-400 font-light text-justify">
-          {descripcion}
+          {product.descripcion}
         </p>
       </div>
       <div className=" flex ml-24 mb-20 justify-between">
-        <h2 className=" text-4xl font-[Dosis]">USD{precio}</h2>
+        <h2 className=" text-4xl font-[Dosis]">USD{actualPrice}</h2>
         <h2 className=" text-4xl font-semibold font-[Dosis]">
-          {modelo.toUpperCase()}
+          {product.modelo.toUpperCase()}
         </h2>
-        <h2 className=" text-4xl font-[Dosis]">{año}</h2>
+        <h2 className=" text-4xl font-[Dosis]">{product.año}</h2>
       </div>
       <div className=" flex ml-24 mb-20 justify-center gap-44">
         <div className=" flex justify-center items-center">
           <form className=" flex">
             <input
               onChange={handleChange}
+              value={value}
               name="precio"
               required
               className=" text-center text-3xl placeholder:text-center placeholder:text-3xl font-[Dosis] w-full border text-3x placeholder:font-[Dosis] hover:border-gray-400 focus:outline-none"
-              placeholder={`min ${min_offer}`}
+              placeholder={`min ${minOffer}`}
             />
             <button
               onClick={handleOffer}
