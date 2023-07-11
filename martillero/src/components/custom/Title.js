@@ -2,8 +2,8 @@ import React from "react";
 
 const Title = ({ text }) => {
   return (
-    <div>
-      <h1 className=" text-2xl font-[Helvetica Neue] font-semibold text-center mt-14">
+    <div className=" w-fit flex justify-center items-center">
+      <h1 className=" text-6xl font-[Dosis] font-semibold text-center">
         {text}
       </h1>
     </div>

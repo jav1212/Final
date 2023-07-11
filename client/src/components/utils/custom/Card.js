@@ -25,13 +25,13 @@ const Card = ({ product, nombre, apellido, activePage, id_cliente }) => {
       </div>
       <div className=" h-2/4">
         <div className=" mt-10">
-          <h1 className=" text-3xl font-semibold font-[Helvetica Neue]">
+          <h1 className=" text-3xl font-semibold font-[Helvetica Neue] sm:text-xl md:text-2xl lg:text-3xl">
             {product.nombre}
           </h1>
         </div>
         <div className=" mt-5">
           <h1
-            className=" text-2xl w-fit font-medium font-[Dosis] hover:underline hover:font-semibold hover:cursor-pointer"
+            className=" sm:text-base md:text-xl lg:text-2xl text-2xl w-fit font-medium font-[Dosis] hover:underline hover:font-semibold hover:cursor-pointer"
             onClick={handleClick}
           >
             USD{product.precio}

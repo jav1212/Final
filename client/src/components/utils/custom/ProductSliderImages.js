@@ -33,7 +33,7 @@ const ProductSliderImages = ({ id_product }) => {
   };
 
   return (
-    <div className=" flex w-fit">
+    <div className=" flex w-2/4">
       <div className="flex flex-col items-center justify-center w-1/5 gap-9">
         {images.map((image, index) => {
           return (
@@ -54,32 +54,38 @@ const ProductSliderImages = ({ id_product }) => {
           );
         })}
       </div>
-      <div className=" flex-col justify-center items-center ">
-        <img
-          alt=""
-          src={dataArrived ? images[currentIndex].url_image : ""}
-          style={{ width: "600px", height: "550px", objectFit: "contain" }}
-          loading="lazy"
-          className=" mb-10"
-        />
-        <div className="flex-wrap flex items-center justify-center gap-32">
-          <div className="">
-            <IoIosArrowBack
-              size="50"
-              color=" grey"
-              cursor="pointer"
-              onClick={handlePrev}
-              className=" transform scale-100 hover:scale-125 transition duration-300 ease-in-out"
-            />
+      <div className=" flex justify-center items-center w-4/5  h-full">
+        <div className=" flex-col justify-center items-center ">
+          <div className="flex justify-center items-center h-full mb-10">
+            <div className=" w-full">
+              <img
+                alt=""
+                src={dataArrived ? images[currentIndex].url_image : ""}
+                loading="lazy"
+                className="object-center object-middle w-full"
+                style={{ maxWidth: "500px" }}
+              />
+            </div>
           </div>
-          <div className="">
-            <IoIosArrowForward
-              size="50"
-              color=" grey"
-              cursor="pointer"
-              onClick={handleNext}
-              className=" transform scale-100 hover:scale-125 transition duration-300 ease-in-out"
-            />
+          <div className="flex-wrap flex items-center justify-center gap-32">
+            <div className="">
+              <IoIosArrowBack
+                size="50"
+                color=" grey"
+                cursor="pointer"
+                onClick={handlePrev}
+                className=" transform scale-100 hover:scale-125 transition duration-300 ease-in-out"
+              />
+            </div>
+            <div className="">
+              <IoIosArrowForward
+                size="50"
+                color=" grey"
+                cursor="pointer"
+                onClick={handleNext}
+                className=" transform scale-100 hover:scale-125 transition duration-300 ease-in-out"
+              />
+            </div>
           </div>
         </div>
       </div>

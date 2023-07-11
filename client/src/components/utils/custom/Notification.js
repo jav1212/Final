@@ -1,12 +1,12 @@
 import React from "react";
 import { IoMdClose, IoMdWarning, IoMdCheckmark } from "react-icons/io";
 
-const Notification = ({ response, visible, message }) => {
+const Notification = ({ response, visible, message, position }) => {
   return (
     <div style={{ zIndex: 3 }}>
       {visible && (
         <div
-          className={`fixed top-3 text-2xl font-[Dosis] right-0 m-4 p-4 rounded-lg shadow-lg ${
+          className={` text-2xl sm:text-base md:text-lg lg:text-xl font-[Dosis] ${position} m-4 p-4 rounded-lg shadow-lg ${
             response === "Failed"
               ? "  bg-red"
               : response === "Warning"

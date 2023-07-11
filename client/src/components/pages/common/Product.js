@@ -47,8 +47,9 @@ const Product = () => {
         setVisible={setVisible}
         nombre={utils.nombre}
         apellido={utils.apellido}
+        id_cliente={utils.id_cliente}
       />
-      <div className=" w-full mr-20  ml-20 mt-10 flex">
+      <div className=" w-full flex">
         <ProductSliderImages id_product={utils.product.id_producto} />
         <ProductCard
           id_cliente={utils.id_cliente}

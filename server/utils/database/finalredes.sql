@@ -62,8 +62,9 @@ VALUES (1,'Cristiano', 'Ronaldo', 'cr7@gmail.com', 'cr7'),
        (3,'Sergio', 'Peréz', 'checo@gmail.com', 'checo'),
        (4,'Shoei', 'Ohtani', 'mvp@gmail.com', 'mvp'),
        (5,'Nikola', 'Jókic', 'joker@gmail.com', 'joker'),
-       (6,'Francis', 'Bompart', 'frans@gmail.com', 'zurda'),
-       (7,'José', 'Peréz', 'eltigre@gmail.com', 'labestia');
+       (6,'Francis', 'Bompart', 'francis@gmail.com', 'francis'),
+       (7,'José', 'Peréz', 'jose@gmail.com', 'jose'),
+       (8,'Arturo','Hung','arturo@gmail.com','arturo');
 
 INSERT INTO PRODUCTOS (id_producto, nombre, descripcion, precio, marca, modelo, año) 
 VALUES ('1', 'Altavoz inteligente Amazon Echo Dot', 'Un altavoz inteligente con Alexa integrado, sonido mejorado, diseño compacto y soporte para múltiples servicios de música en streaming', 49.99,  'Amazon', 'Echo Dot (4ta generación)', 2020),

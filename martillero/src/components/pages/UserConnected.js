@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import UserCard from "../custom/UserCard";
 import Title from "../custom/Title";
 
-const UserConnected = ({ socket }) => {
+const UserConnected = ({ socket, cleaner, setCleaner }) => {
   const [newUser, setNewUser] = useState([]);
   useEffect(() => {
     function onNewUser(data) {
@@ -13,15 +13,20 @@ const UserConnected = ({ socket }) => {
         setNewUser(updatedUsers);
       }
     }
+
+    if (newUser.length === 0) setCleaner(true);
+    else setCleaner(false);
     socket.on("newUser", (data) => onNewUser(data));
     return () => {
       socket.off("newUser", (data) => onNewUser(data));
     };
-  }, [newUser, socket]);
+  }, [newUser, setCleaner, socket]);
 
   return (
     <div className=" w-2/4">
-      <Title text="Users Connected" />
+      <div className=" flex justify-center items-center mt-5">
+        <Title text="Users Connected" />
+      </div>
       <div className=" mt-10 flex flex-col justify-center items-center">
         {newUser.map((user, index) => (
           <UserCard

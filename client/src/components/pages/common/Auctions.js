@@ -78,12 +78,14 @@ const Auctions = () => {
         response={response}
         visible={visibleNotification}
         message={message}
+        position="fixed top-0 right-0 m-4"
       />
       <Bar
         visible={visible}
         setVisible={setVisible}
         nombre={utils.nombre}
         apellido={utils.apellido}
+        id_cliente={utils.id_cliente}
       />
       <Pagination
         products={products}

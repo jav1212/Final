@@ -58,7 +58,7 @@ const Login = ({ socket }) => {
       window.removeEventListener("beforeunload", handleBeforeUnload);
       window.removeEventListener("unload", handleUnload);
     };
-  }, []);
+  }, [navigate, socket]);
 
   const handleChange = (e) => {
     setLogin({
@@ -87,7 +87,12 @@ const Login = ({ socket }) => {
 
   return (
     <div className=" w-2/4 flex flex-col h-screen items-center justify-center">
-      <Notification response={response} visible={visible} message={message} />
+      <Notification
+        response={response}
+        visible={visible}
+        message={message}
+        position="fixed top-0 right-0 m-4"
+      />
       <LoginFormHeader logo={Logo} text="Login to your account" />
       <div className=" m-10 w-full flex flex-col justify-center items-center">
         <Form
